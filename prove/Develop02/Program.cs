@@ -40,12 +40,20 @@ class Journal
 
     public void SaveToFile(string filename)
     {
-        using (StreamWriter sw = new StreamWriter(filename))
+        try
         {
-            foreach (var entry in entries)
+            using (StreamWriter sw = new StreamWriter(filename))
             {
-                sw.WriteLine($"{entry.Date}|{entry.Prompt}|{entry.Response}");
+                foreach (var entry in entries)
+                {
+                    sw.WriteLine($"{entry.Date}|{entry.Prompt}|{entry.Response}");
+                }
             }
+            Console.WriteLine("Journal saved to file successfully!\n");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error saving file: {e.Message}");
         }
     }
 
@@ -66,6 +74,7 @@ class Journal
                     }
                 }
             }
+            Console.WriteLine("Journal loaded from file successfully!\n");
         }
         catch (Exception e)
         {
@@ -79,14 +88,6 @@ class Program
     static void Main()
     {
         Journal journal = new Journal();
-        List<string> prompts = new List<string>
-        {
-            "Who was the most interesting person I interacted with today?",
-            "What was the best part of my day?",
-            "How did I see the hand of the Lord in my life today?",
-            "What was the strongest emotion I felt today?",
-            "If I had one thing I could do over today, what would it be?"
-        };
 
         while (true)
         {
@@ -102,20 +103,7 @@ class Program
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine("Choose a prompt:");
-                    for (int i = 0; i < prompts.Count; i++)
-                    {
-                        Console.WriteLine($"{i + 1}. {prompts[i]}");
-                    }
-                    Console.Write("Enter the prompt number: ");
-                    int promptNumber = int.Parse(Console.ReadLine()) - 1;
-
-                    Console.Write("Enter your response: ");
-                    string response = Console.ReadLine();
-
-                    JournalEntry newEntry = new JournalEntry(prompts[promptNumber], response);
-                    journal.AddEntry(newEntry);
-                    Console.WriteLine("Entry added successfully!\n");
+                    // Code for writing a new entry can be added here
                     break;
 
                 case "2":
@@ -123,17 +111,11 @@ class Program
                     break;
 
                 case "3":
-                    Console.Write("Enter the filename to save: ");
-                    string saveFilename = Console.ReadLine();
-                    journal.SaveToFile(saveFilename);
-                    Console.WriteLine("Journal saved to file successfully!\n");
+                    journal.SaveToFile("journal.txt");
                     break;
 
                 case "4":
-                    Console.Write("Enter the filename to load: ");
-                    string loadFilename = Console.ReadLine();
-                    journal.LoadFromFile(loadFilename);
-                    Console.WriteLine("Journal loaded from file successfully!\n");
+                    journal.LoadFromFile("journal.txt");
                     break;
 
                 case "5":
