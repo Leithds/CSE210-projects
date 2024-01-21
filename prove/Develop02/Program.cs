@@ -103,7 +103,6 @@ class Program
             switch (choice)
             {
                 case "1":
-                    // Code for writing a new entry can be added here
                     break;
 
                 case "2":
