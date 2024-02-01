@@ -2,7 +2,7 @@ using System;
 
 class Assignment
 {
-    private string _studentName = "";
+    protected string _studentName = "";
     private string _topic = "";
 
     public Assignment()
