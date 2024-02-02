@@ -45,8 +45,6 @@ class Activity
     }
     protected void ShowCountDown(int seconds) // I needed stack overflow to make the numbers not keep moving further right.
     {
-        Console.Write("Get ready... ");
-
         for (int i = seconds; i > 0; i--)
         {
             string countdownText = $"{i} ";

@@ -19,6 +19,7 @@ class Program
             {
                 case 1:
                     activity = new BreathingActivity();
+                    ((BreathingActivity)activity).Run(); // This fixes my Breathing act. somehow... I don't know why the others don't need this
                     break;
                 case 2:
                     activity = new ListingActivity();

@@ -1,4 +1,4 @@
-class BreathingActivity : Activity
+class BreathingActivity : Activity // This has been broken for sooooooooo long :(
 {
     public BreathingActivity() : base("\n--Breathing Activity--\n", "\nRelax by walking through breathing in and out slowly.")
     {
