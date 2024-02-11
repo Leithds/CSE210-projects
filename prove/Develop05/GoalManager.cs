@@ -9,7 +9,7 @@ public class GoalManager
 
     public void Start()
     {
-        LoadGoals();
+        LoadGoals("Goals.txt");
     }
 
     private void LoadGoals()
@@ -112,49 +112,46 @@ public class GoalManager
     }
 }
 
-       public void LoadGoals(string fileName)
+        public void LoadGoals(string fileName)
     {
         try
         {
-            if (File.Exists(fileName))
+            string[] lines = File.ReadAllLines(fileName);
+
+            foreach (string line in lines)
             {
-                string[] lines = File.ReadAllLines(fileName);
+                string[] parts = line.Split(',');
 
-                foreach (string line in lines)
+                string shortName = parts[0];
+                string description = parts[1];
+                string points = parts[2];
+
+                Goal goal;
+
+                if (parts.Length > 3)
                 {
-                    string[] parts = line.Split(',');
+                    int amountCompleted = int.Parse(parts[3]);
+                    int target = int.Parse(parts[4]);
+                    int bonus = int.Parse(parts[5]);
 
-                    string shortName = parts[0];
-                    string description = parts[1];
-                    string points = parts[2];
-
-                    Goal goal;
-
-                    if (parts.Length > 3)
+                    goal = new ChecklistGoal(shortName, description, points, target, bonus)
                     {
-                        int amountCompleted = int.Parse(parts[3]);
-                        int target = int.Parse(parts[4]);
-                        int bonus = int.Parse(parts[5]);
-
-                        goal = new ChecklistGoal(shortName, description, points, target, bonus)
-                        {
-                            _amountCompleted = amountCompleted
-                        };
-                    }
-                    else
-                    {
-                        goal = new SimpleGoal(shortName, description, points);
-                    }
-
-                    _goals.Add(goal);
+                        AmountCompleted = amountCompleted
+                    };
+                }
+                else
+                {
+                    goal = new SimpleGoal(shortName, description, points);
                 }
 
-                Console.WriteLine("Goals loaded successfully!");
+                _goals.Add(goal);
             }
-            else
-            {
-                Console.WriteLine("File does not exist.");
-            }
+
+            Console.WriteLine("Goals loaded successfully!");
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("No saved goals found.");
         }
         catch (Exception ex)
         {

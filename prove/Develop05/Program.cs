@@ -11,7 +11,7 @@ class Program
 
         while (!exit)
         {
-            Console.WriteLine("\nEternal Quest Menu");
+            Console.WriteLine("\nThe Great Celestial Race");
             Console.WriteLine("1. Display Player's Score");
             Console.WriteLine("2. List Goals");
             Console.WriteLine("3. Create Goal");
@@ -52,7 +52,7 @@ class Program
             }
         }
     }
-        static void CreateGoal(GoalManager goalManager)
+    static void CreateGoal(GoalManager goalManager)
     {
         Console.WriteLine("\nCreate Goal");
         Console.Write("Enter goal type (Simple/Eternal/Checklist): ");

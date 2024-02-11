@@ -5,7 +5,7 @@ public class ChecklistGoal : Goal
     public int _bonus;
 
     public int AmountCompleted { get; internal set; }
-    public object Target { get; private set; }
+    public int Target { get; private set; }
 
     public ChecklistGoal(string name, string description, string points, int target, int bonus) : base(name, description, points)
     {
@@ -33,6 +33,6 @@ public class ChecklistGoal : Goal
     }
 public override string GetStringRepresentation()
 {
-    return $"{ShortName}: {Description}. Checklist goal. Completed {AmountCompleted}/{Target} times.";
+    return $"{ShortName}: {Description}. Checklist goal. Completed {_amountCompleted}/{Target} times.";
 }
 }
