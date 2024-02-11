@@ -1,28 +1,37 @@
 public class Goal
 {
-    public string _shortName;
-    public string _description;
-    public string _points;
+    public string ShortName { get; private set; }
+    public string Description { get; private set; }
+    public string Points { get; private set; }
+
     public Goal(string name, string description, string points)
     {
-        _shortName = name;
-        _description = description;
-        _points = points;
+        ShortName = name;
+        Description = description;
+        Points = points;
     }
-    public void RecordEvent()
-    {
 
-    }
-    public bool IsComplete()
+    public virtual void RecordEvent()
     {
+    }
 
-    }
-    public string GetDetails()
+    public virtual bool IsComplete()
     {
+        return false;
+    }
 
-    }
-    public string GetStringRepresentaion()
+    public virtual int GetBonus()
     {
-        
+        return 0;
+    }
+
+    public virtual string GetDetails()
+    {
+        return $"{ShortName}: {Description}";
+    }
+
+    public virtual string GetStringRepresentation()
+    {
+        return $"{ShortName}: {Description}";
     }
 }
