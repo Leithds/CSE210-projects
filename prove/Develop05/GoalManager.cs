@@ -57,7 +57,7 @@ public class GoalManager
         }
     }
 
-    public void RecordEvent(string goalName)
+    public void RecordEvent(string goalName, string fileName)
     {
         int totalPointsEarned = 0;
 
@@ -72,17 +72,12 @@ public class GoalManager
                     _score += goal.GetBonus();
                 }
                 totalPointsEarned = _score;
-                SaveGoals();
+                SaveGoals(fileName);
                 break;
             }
         }
 
         Console.WriteLine($"Total points earned: {totalPointsEarned}");
-    }
-
-    private void SaveGoals()
-    {
-        throw new NotImplementedException();
     }
 
     public void SaveGoals(string fileName)
@@ -112,7 +107,7 @@ public class GoalManager
         }
     }
 
-        public void LoadGoals(string fileName)
+    public void LoadGoals(string fileName)
     {
         try
         {

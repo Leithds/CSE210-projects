@@ -86,6 +86,6 @@ class Program
         Console.WriteLine("\nRecord Event");
         Console.Write("Enter the goal name: ");
         string goalName = Console.ReadLine();
-        goalManager.RecordEvent(goalName);
+        goalManager.RecordEvent(goalName, "Goals.txt");
     }
 }
