@@ -86,31 +86,31 @@ public class GoalManager
     }
 
     public void SaveGoals(string fileName)
-{
-    List<string> lines = new List<string>();
-
-    foreach (var goal in _goals)
     {
-        string line = $"{goal.ShortName},{goal.Description},{goal.Points}";
+        List<string> lines = new List<string>();
 
-        if (goal is ChecklistGoal checklistGoal)
+        foreach (var goal in _goals)
         {
-            line += $",{checklistGoal._amountCompleted},{checklistGoal._target},{checklistGoal._bonus}";
+            string line = $"{goal.ShortName},{goal.Description},{goal.Points}";
+
+            if (goal is ChecklistGoal checklistGoal)
+            {
+                line += $",{checklistGoal._amountCompleted},{checklistGoal._target},{checklistGoal._bonus}";
+            }
+
+            lines.Add(line);
         }
 
-        lines.Add(line);
+        try
+        {
+            File.WriteAllLines(fileName, lines);
+            Console.WriteLine("Goals saved successfully!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving goals: {ex.Message}");
+        }
     }
-
-    try
-    {
-        File.WriteAllLines(fileName, lines);
-        Console.WriteLine("Goals saved successfully!");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error saving goals: {ex.Message}");
-    }
-}
 
         public void LoadGoals(string fileName)
     {
