@@ -1,11 +1,19 @@
 public class LetterActivity : Activity
 {
-    public void WriteLetter(string encouragement)
+    private string _letter;
+
+    public LetterActivity(string letter) : base("Letter Activity", "Encouraging letters to yourself. \nRemind yourself why you are doing this.")
     {
-        using (StreamWriter sw = File.AppendText("final.txt"))
-        {
-            sw.WriteLine($"Encouragement Letter: {encouragement}");
-        }
-        Console.WriteLine("Letter of encouragement written and saved.");
+        _letter = letter;
+    }
+
+    public void GetRandomPrompt()
+    {
+        Console.WriteLine("Prompt: Think about your progress so far and write an encouraging letter to yourself.");
+    }
+
+    public void GetRandomLetter()
+    {
+        Console.WriteLine($"Your letter: {_letter}");
     }
 }

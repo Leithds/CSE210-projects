@@ -1,11 +1,22 @@
 public class GoalSettingActivity : Activity
 {
-    public void SetGoal(string milestone, string goal)
+    private string _description;
+    private string _goals;
+
+    public GoalSettingActivity(string description, string goals) : base("Goal Setting Activity", 0, "Set new goals")
     {
-        using (StreamWriter sw = File.AppendText("final.txt"))
-        {
-            sw.WriteLine($"{milestone}: {goal}");
-        }
-        Console.WriteLine($"Goal set for {milestone}: {goal}");
+        _description = description;
+        _goals = goals;
+    }
+
+    public void SetGoals(string description, string goals)
+    {
+        _description = description;
+        _goals = goals;
+    }
+
+    public string GetGoals()
+    {
+        return _goals;
     }
 }

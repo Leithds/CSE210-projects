@@ -2,69 +2,139 @@ using System;
 
 public class Program
 {
-    private readonly GoalSettingActivity goalSettingActivity = new GoalSettingActivity();
-    private readonly MeditationActivity meditationActivity = new MeditationActivity();
-    private readonly PanicButton panicButton = new PanicButton();
-
+    private const string StreakFileName = "Streak.txt";
     public static void Main(string[] args)
     {
-        Program program = new Program();
-        program.Run();
-    }
+        Records records = new Records();
 
-    public void Run()
-    {
         while (true)
         {
-            Console.WriteLine("1. Track Day (Success/Setback)");
-            Console.WriteLine("2. Meditate");
-            Console.WriteLine("3. Access Panic Button");
-            Console.WriteLine("4. Add/Edit Goals or Review Letters");
-            Console.WriteLine("5. Exit");
+            bool success = CheckInRecordSuccess();
+            records.CheckSuccess(success);
+            DisplayMainMenu();
+        }
+    }
 
-            int choice;
-            if (!int.TryParse(Console.ReadLine(), out choice))
+    private static bool CheckInRecordSuccess()
+    {
+        if (!File.Exists(StreakFileName))
+        {
+            File.WriteAllText(StreakFileName, DateTime.Now.ToString());
+            return true;
+        }
+        else
+        {
+            string lastCheckInString = File.ReadAllText(StreakFileName);
+            if (DateTime.TryParse(lastCheckInString, out DateTime lastCheckIn))
             {
-                Console.WriteLine("Invalid input. Please enter a number.");
-                continue;
+                TimeSpan timeElapsed = DateTime.Now - lastCheckIn;
+                if (timeElapsed.TotalDays >= 1)
+                {
+                    File.WriteAllText(StreakFileName, DateTime.Now.ToString());
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
+            else
+            {
+                Console.WriteLine("Error: Unable to parse last check-in time.");
+                return false;
+            }
+        }
+    }
+
+    private static void DisplayMainMenu()
+    {
+        Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. Check-in");
+            Console.WriteLine("2. Goals");
+            Console.WriteLine("3. Letters");
+            Console.WriteLine("4. Meditation");
+            Console.WriteLine("5. Panic Button");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
 
             switch (choice)
             {
                 case 1:
-                    
-                    break;
-                case 2:
-                    Console.WriteLine("Enter duration for meditation (in minutes):");
-                    int duration;
-                    if (!int.TryParse(Console.ReadLine(), out duration))
-                    {
-                        Console.WriteLine("Invalid input. Please enter a number.");
-                        continue;
-                    }
-                    meditationActivity.GuideMeditation(duration);
-                    break;
-                case 3:
-                    panicButton.HandlePanic();
-                    break;
-                case 4:
-                    Console.WriteLine("Enter milestone (e.g., 1 day, 1 week):");
-                    string milestone = Console.ReadLine();
-                    Console.WriteLine("Enter goal or letter of encouragement:");
-                    string content = Console.ReadLine();
+                    Console.WriteLine("Did you have a successful day? (Y/N): ");
+                    char response = Console.ReadLine().ToUpper()[0];
 
-                    if (milestone.ToLower().Contains("day") || milestone.ToLower().Contains("week"))
-                        goalSettingActivity.SetGoal(milestone, content);
+                    if (response == 'Y')
+                    {
+                        Console.WriteLine("Congratulations! Keep up the good work!");
+                    }
+                    else if (response == 'N')
+                    {
+                        Console.WriteLine("It's okay. Tomorrow is another day.");
+                    }
                     else
-                        Console.WriteLine("Invalid milestone for goal. Try again.");
+                    {
+                        Console.WriteLine("Invalid input.");
+                    }
+
                     break;
+
+                case 2:
+                    Console.WriteLine("Goals Menu:");
+                    Console.WriteLine("1. List Goals");
+                    Console.WriteLine("2. Set New Goal");
+
+                    int goalChoice = Convert.ToInt32(Console.ReadLine());
+
+                    switch (goalChoice)
+                    {
+                        case 1:
+                            Miscellaneous.ListGoals(goals);
+                            break;
+
+                        case 2:
+                            Console.WriteLine("Enter your new goal:");
+                            string newGoal = Console.ReadLine();
+                            goals.Add(newGoal);
+                            Console.WriteLine("New goal set!");
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid choice.");
+                            break;
+                    }
+
+                    break;
+
+                case 3:
+                    Console.WriteLine("Letters Menu:");
+                    Console.WriteLine("1. Edit Letters");
+
+                    int letterChoice = Convert.ToInt32(Console.ReadLine());
+
+                    switch (letterChoice)
+                    {
+                        case 1:
+                            Miscellaneous.EditLetters(letters);
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid choice.");
+                            break;
+                    }
+
+                    break;
+
+                case 4:
+                    activities[1].Run();
+                    break;
+
                 case 5:
-                    Console.WriteLine("Exiting program...");
-                    return;
+                    PanicButton.Run(activities);
+                    break;
+
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;
             }
-        }
     }
 }
