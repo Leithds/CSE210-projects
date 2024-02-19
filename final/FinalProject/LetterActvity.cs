@@ -7,13 +7,11 @@ public class LetterActivity : Activity
         _letter = letter;
     }
 
-    public void GetRandomPrompt()
+    public override void Run()
     {
+        base.Run();
         Console.WriteLine("Prompt: Think about your progress so far and write an encouraging letter to yourself.");
-    }
-
-    public void GetRandomLetter()
-    {
         Console.WriteLine($"Your letter: {_letter}");
+        DisplayEndAffirmation();
     }
 }

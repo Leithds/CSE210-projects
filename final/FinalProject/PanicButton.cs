@@ -1,17 +1,6 @@
 public class PanicButton
 {
-    private bool _urges;
-
-    public PanicButton()
-    {
-        _urges = false;
-    }
-
-    public void Run()
-    {
-    }
-
-    public Activity GetRandomActivity()
+    public static void Run()
     {
         Random rnd = new Random();
         int choice = rnd.Next(1, 4);
@@ -19,18 +8,24 @@ public class PanicButton
         switch (choice)
         {
             case 1:
-                return new BreathingActivity("Take deep breaths and relax.");
-            case 2:
-                return new LetterActivity("Write a letter to yourself.");
-            case 3:
-                return new GoalSettingActivity("Set new goals.", "Stay motivated and focused.");
-            default:
-                return new BreathingActivity("Take deep breaths and relax.");
-        }
-    }
+                BreathingActivity breathingActivity = new BreathingActivity();
+                breathingActivity.Run();
+                break;
 
-    internal static void Run(Activity[] activities)
-    {
-        throw new NotImplementedException();
+            case 2:
+                LetterActivity letterActivity = new LetterActivity("Write a letter to yourself.");
+                letterActivity.Run();
+                break;
+
+            case 3:
+                GoalSettingActivity goalSettingActivity = new GoalSettingActivity("Stay motivated and focused.");
+                goalSettingActivity.Run();
+                break;
+
+            default:
+                BreathingActivity defaultActivity = new BreathingActivity();
+                defaultActivity.Run();
+                break;
+        }
     }
 }

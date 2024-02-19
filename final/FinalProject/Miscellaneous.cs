@@ -2,8 +2,6 @@ public class Miscellaneous
 {
     private const string GoalsFileName = "Goals.txt";
     private const string LettersFileName = "Letters.txt";
-    private int _goalCounter;
-    private int _letterCounter;
     private Dictionary<int, string> _goals;
     private Dictionary<int, string> _letters;
 
@@ -11,24 +9,8 @@ public class Miscellaneous
     {
         _goals = new Dictionary<int, string>();
         _letters = new Dictionary<int, string>();
-        _goalCounter = 1;
-        _letterCounter = 1;
-    }
-
-    public void Start()
-    {
         LoadGoals();
         LoadLetters();
-    }
-
-    public Dictionary<int, string> GetGoals()
-    {
-        return _goals;
-    }
-
-    public Dictionary<int, string> GetLetters()
-    {
-        return _letters;
     }
 
     public void ListGoals()
@@ -40,14 +22,10 @@ public class Miscellaneous
         }
     }
 
-    public void EditGoals()
+    public void EditGoals(string newGoal)
     {
-        Console.WriteLine("Enter a new goal:");
-        string newGoal = Console.ReadLine();
-        _goals[_goalCounter] = newGoal;
-        _goalCounter++;
+        _goals.Add(_goals.Count + 1, newGoal);
         SaveGoals();
-        Console.WriteLine("Goal added successfully!");
     }
 
     public void SaveGoals()
@@ -85,10 +63,6 @@ public class Miscellaneous
                         if (parts.Length == 2 && int.TryParse(parts[0], out int key))
                         {
                             _goals[key] = parts[1];
-                            if (key >= _goalCounter)
-                            {
-                                _goalCounter = key + 1;
-                            }
                         }
                     }
                 }
@@ -105,14 +79,10 @@ public class Miscellaneous
         }
     }
 
-    public void EditLetters()
+    public void EditLetters(string newText)
     {
-        Console.WriteLine("Enter the text of the letter:");
-        string newText = Console.ReadLine();
-        _letters[_letterCounter] = newText;
-        _letterCounter++;
+        _letters.Add(_letters.Count + 1, newText);
         SaveLetters();
-        Console.WriteLine("Letter added successfully!");
     }
 
     public void SaveLetters()
@@ -150,10 +120,6 @@ public class Miscellaneous
                         if (parts.Length == 2 && int.TryParse(parts[0], out int key))
                         {
                             _letters[key] = parts[1];
-                            if (key >= _letterCounter)
-                            {
-                                _letterCounter = key + 1;
-                            }
                         }
                     }
                 }
@@ -168,5 +134,10 @@ public class Miscellaneous
         {
             Console.WriteLine($"An error occurred while loading letters: {ex.Message}");
         }
+    }
+
+    public Dictionary<int, string> GetLetters()
+    {
+        return _letters;
     }
 }

@@ -1,13 +1,10 @@
 public class Records
 {
-    private const string StreakFileName = "Streak.txt";
     private int _successStreak;
-    private Miscellaneous _miscellaneous;
 
     public Records()
     {
         _successStreak = 0;
-        _miscellaneous = new Miscellaneous();
     }
 
     public void CheckSuccess(bool success)
@@ -34,17 +31,15 @@ public class Records
     public void ShowRecentGoals()
     {
         Console.WriteLine("Recent Goals:");
-        Dictionary<int, string> goals = _miscellaneous.GetGoals();
-        foreach (var goal in goals)
-        {
-            Console.WriteLine($"Key: {goal.Key}, Value: {goal.Value}");
-        }
+        Miscellaneous misc = new Miscellaneous();
+        misc.ListGoals();
     }
 
     public void ReadRecentLetter()
     {
         Console.WriteLine("Recent Letter:");
-        Dictionary<int, string> letters = _miscellaneous.GetLetters();
+        Miscellaneous misc = new Miscellaneous();
+        Dictionary<int, string> letters = misc.GetLetters();
         if (letters.Count > 0)
         {
             Console.WriteLine($"Key: {letters.Count}, Value: {letters[letters.Count]}");

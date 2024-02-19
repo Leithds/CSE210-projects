@@ -1,8 +1,9 @@
 public class BreathingActivity : Activity
 {
-    public BreathingActivity(string v) : base("Breathing Activity", "Take deep breaths and relax.")
+    public BreathingActivity() : base("Breathing Activity", "Take deep breaths and relax.")
     {
     }
+
     protected void ShowCountDown(int seconds)
     {
         for (int i = seconds; i > 0; i--)
@@ -12,9 +13,7 @@ public class BreathingActivity : Activity
             System.Threading.Thread.Sleep(1000);
 
             Console.SetCursorPosition(Console.CursorLeft - countdownText.Length, Console.CursorTop);
-
             Console.Write(new string(' ', countdownText.Length));
-
             Console.SetCursorPosition(Console.CursorLeft - countdownText.Length, Console.CursorTop);
         }
 
